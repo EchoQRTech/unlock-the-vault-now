@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="description" content="The Treasuretto Vault — battle-tested playbooks & AI tools for vintage resellers. 2-day free trial, $15 first month, $25/mo after. Cancel anytime." />
+<meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+<meta name="theme-color" content="#0a0a0f" />
+<title>The Treasuretto Vault — Unlock The Vault</title>
+
+<!-- Optional: Cinzel for headings (comment out for absolute fastest) -->
+<!-- <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&display=swap" rel="stylesheet"> -->
+
+<style>
+/* ========= TOKENS ========= */
+:root{
+  --bg:#0a0a0f; --bg2:#0e0e14;
+  --gold:#FFD700; --gold-soft:#ffe58a; --gold-deep:#b88a00;
+  --gold-warm:#ffed9f; --gold-glow:#fff7c8;
+  --velvet:#8B0000;
+  --txt:#fff; --muted:#b8b8c0; --muted-2:#e9e0ae;
+  --radius:16px; --radius-lg:22px;
+  --ring:0 0 0 2px rgba(255,215,0,.22);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--txt);
+  background:
+    radial-gradient(900px 560px at 15% -12%, rgba(139,0,0,.25), transparent 58%),
+    radial-gradient(760px 540px at 120% 5%, rgba(255,215,0,.10), transparent 42%),
+    linear-gradient(180deg, #0a0a0f 0%, #06060a 100%);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family: Cinzel, Georgia, 'Times New Roman', serif; letter-spacing:.35px}
+a{color:inherit; text-decoration:none}
+.wrap{width:min(94vw, 1120px); margin-inline:auto}
+
+/* Velvet micro-texture (tiny inline SVG) */
+.velvet{
+  position:fixed; inset:0; pointer-events:none; opacity:.05; mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 .5 0'/></feComponentTransfer></filter><rect width='100%25' height='100%25' filter='url(%23f)' fill='%238B0000'/></svg>");
+  background-size:420px 420px;
+}
+
+/* ========= NAV ========= */
+.nav{position:fixed; inset:0 0 auto 0; z-index:60; transition:background .18s ease, box-shadow .18s ease, border-color .18s ease}
+.nav__in{display:flex; align-items:center; justify-content:space-between; padding:10px 0}
+.brand__name{
+  font-family: Cinzel, Georgia, serif; font-variant-caps: small-caps;
+  letter-spacing:.6px; font-weight:900; font-size:19px; line-height:1;
+  background:linear-gradient(180deg,#fff,#f6eaa9 32%, var(--gold) 66%, #b08800 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 10px 28px rgba(255,215,0,.10);
+  white-space:nowrap;
+}
+.nav.solid{background:rgba(10,10,15,.96); border-bottom:1px solid rgba(255,215,0,.16); box-shadow:0 8px 20px rgba(0,0,0,.45)}
+.menu{display:none; align-items:center; gap:6px}
+.menu a{padding:8px 10px; border-radius:10px; color:#f6f2d0b3; font-weight:650; font-size:13px; position:relative}
+.menu a:hover{color:var(--gold); background:rgba(255,215,0,.06)}
+.menu a.active{color:var(--gold)}
+.menu a.active::after{content:""; position:absolute; left:10px; right:10px; bottom:-2px; height:2px; background:linear-gradient(90deg,#ffe89a,var(--gold),#ffe89a)}
+.cta-nav{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; font-weight:900; font-size:13px; color:#0a0a0f; background:linear-gradient(135deg, var(--gold), #f7e889); box-shadow:var(--ring)}
+.burger{display:inline-grid; place-items:center; padding:8px 10px; border-radius:10px; border:1px solid rgba(255,215,0,.16); color:#f7eeb8}
+@media (min-width:900px){ .menu{display:flex} .burger{display:none} }
+
+/* Drawer */
+.drawer{position:fixed; left:0; right:0; top:56px; z-index:50; max-height:0; overflow:hidden; pointer-events:none; background:rgba(10,10,15,.98); border-top:1px solid rgba(255,215,0,.12); transition:max-height .25s ease}
+.drawer.open{max-height:320px; pointer-events:auto}
+.drawer a{display:block; padding:12px 14px; border:1px solid rgba(255,215,0,.12); border-radius:12px; margin:7px 0; color:#fffdc9; font-weight:700; font-size:14px}
+.drawer a:hover{background:rgba(255,215,0,.10)}
+.spacer{height:60px}
+
+/* ========= HERO ========= */
+header.hero{position:relative; min-height:92svh; display:grid; place-items:center; overflow:hidden}
+.hero__grid{display:grid; gap:16px; text-align:center; padding:22px 0}
+
+/* halo + specks */
+.hero-halo{position:absolute; inset:auto; width:140vmax; height:140vmax; border-radius:50%;
+  background:radial-gradient(closest-side, rgba(255,215,0,.12), rgba(255,215,0,.06) 42%, transparent 70%);
+  filter:blur(18px); transform:translateY(-40%) scale(1.1); pointer-events:none; opacity:.6}
+.specks{position:absolute; inset:0; pointer-events:none; opacity:.24}
+.specks::before,.specks::after{content:""; position:absolute; inset:0;
+  background-image:radial-gradient(#ffd700 1px, transparent 1.1px), radial-gradient(#ffd700 .8px, transparent 1px);
+  background-size:120px 120px, 90px 90px; background-position:0 0, 40px 30px}
+@media (prefers-reduced-motion:no-preference){
+  .hero-halo{animation:float 16s ease-in-out infinite alternate}
+  @keyframes float{from{transform:translateY(-44%) scale(1.07)} to{transform:translateY(-38%) scale(1.13)}}
+}
+
+/* badge + headings */
+.tagline{justify-self:center; display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; font-size:12px; color:#ffeeb8; border:1px solid rgba(255,215,0,.22); background:linear-gradient(90deg, rgba(139,0,0,.33), rgba(255,215,0,.10))}
+h1.hero__title{
+  margin:8px 0 4px; font-size: clamp(42px, 7.6vw, 76px); line-height:1.02;
+  background:linear-gradient(180deg, #fff, #f3eaa1 26%, var(--gold) 62%, #b08800 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 20px 44px rgba(255,215,0,.12);
+  position:relative;
+}
+.hero__title::after{content:""; display:block; height:2px; margin:12px auto 0; width:min(280px,48%); background:linear-gradient(90deg, transparent, rgba(255,215,0,.45), transparent)}
+.shimmer::before{content:""; position:absolute; inset:0; transform:skewX(-20deg) translateX(-120%); background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.22) 12%, transparent 24%); filter:blur(5px); animation:shimmer 7s linear infinite}
+@keyframes shimmer{to{transform:skewX(-20deg) translateX(120%)}}
+.sub{color:var(--muted); font-size:15px; max-width:780px; justify-self:center; margin-inline:auto}
+
+/* Hero features */
+.hero-feats{display:grid; grid-template-columns:repeat(3, minmax(90px,1fr)); gap:18px; margin-top:8px}
+@media (max-width:520px){ .hero-feats{grid-template-columns:1fr; text-align:center} }
+.hfeat{display:grid; justify-items:center; gap:8px}
+.hfeat svg{width:44px; height:44px; color:var(--gold-soft); filter:drop-shadow(0 6px 16px rgba(255,215,0,.12))}
+.hfeat .cap{font-weight:800}
+.hfeat .subcap{color:var(--muted-2); font-size:14px}
+
+/* CTA */
+.cta-row{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:14px}
+.btn{display:inline-flex; align-items:center; gap:10px; padding:14px 22px; border-radius:16px; font-weight:900; font-size:16px; border:1px solid transparent; transition:transform .06s ease, filter .12s ease, box-shadow .12s ease}
+.btn:active{transform:translateY(1px)}
+.btn--gold{
+  color:#111;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.6), transparent 45%),
+    radial-gradient(160% 120% at 50% -30%, var(--gold-glow) 0%, var(--gold) 46%, #f2cd2e 72%),
+    linear-gradient(180deg, #f4d43c, #d5ae02);
+  box-shadow:0 14px 46px rgba(255,215,0,.26), inset 0 1px 0 rgba(255,255,255,.6), inset 0 -1px 0 rgba(0,0,0,.25), var(--ring);
+}
+.btn--gold:hover{filter:saturate(1.06) brightness(1.02)}
+.btn--ghost{color:var(--gold); background:rgba(255,215,0,.06); border-color:rgba(255,215,0,.16); font-size:14px}
+
+/* Platforms (wordmarks as text to avoid requests) */
+.hero-micro{color:var(--muted-2); font-size:13px; margin-top:8px}
+.platforms{display:flex; gap:26px; justify-content:center; align-items:center; flex-wrap:wrap; margin-top:14px}
+.logo-word{font-weight:900; letter-spacing:.8px; color:#f2d772; opacity:.92}
+.logo-word.depop{font-size:22px}
+.logo-word.ebay{font-size:22px}
+.logo-word.grailed{font-size:18px; letter-spacing:3px}
+
+/* ========= TRUST BADGES ========= */
+.trust{display:grid; grid-auto-flow:column; gap:10px; justify-content:center; margin-top:6px}
+.trust .tb{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-size:12px; color:#ffeeb8; border:1px solid rgba(255,215,0,.18); background:rgba(255,215,0,.05)}
+
+/* ========= SECTIONS ========= */
+section{padding:62px 0}
+.head{display:flex; align-items:end; justify-content:space-between; gap:10px; margin-bottom:10px}
+.title{font-size:24px}
+.muted{color:var(--muted); font-size:13px}
+
+/* ========= PROOF STRIP (centered KPIs, icons, shimmer, stagger) ========= */
+.proof{padding:34px 0; border-block:1px solid rgba(255,215,0,.12)}
+.proof .wrap{display:grid; place-items:center}
+.kpis{display:grid; grid-auto-flow:column; gap:18px; align-items:stretch}
+@media (max-width:820px){ .kpis{grid-auto-flow:row} }
+.kpi{min-width:220px; text-align:center; padding:18px 20px; border-radius:18px; border:1px solid rgba(255,215,0,.22);
+  background:
+    radial-gradient(360px 180px at 20% -10%, rgba(255,215,0,.12), transparent 60%),
+    linear-gradient(180deg, rgba(255,215,0,.06), rgba(139,0,0,.08));
+  box-shadow:0 18px 40px rgba(255,215,0,.10);
+  opacity:0; transform:translateY(6px); transition:opacity .55s ease, transform .55s ease;
+}
+.proof.reveal.in .kpi{opacity:1; transform:none}
+.proof.reveal.in .kpi:nth-child(1){transition-delay:.05s}
+.proof.reveal.in .kpi:nth-child(2){transition-delay:.15s}
+.proof.reveal.in .kpi:nth-child(3){transition-delay:.25s}
+.kicon{width:26px; height:26px; margin-bottom:6px; color:var(--gold-soft); filter:drop-shadow(0 6px 16px rgba(255,215,0,.18))}
+.knum{position:relative; display:block; font:900 clamp(28px,5vw,46px)/1 Inter,system-ui; letter-spacing:.3px;
+  background:linear-gradient(180deg,#fff,#f3eaa1 30%, var(--gold) 65%, #b08800 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 12px 28px rgba(255,215,0,.16); overflow:hidden
+}
+.knum::after{content:""; position:absolute; inset:0; transform:translateX(-120%) skewX(-20deg);
+  background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.20) 12%, transparent 26%);
+  animation:kshimmer 12s linear infinite
+}
+@keyframes kshimmer{to{transform:translateX(120%) skewX(-20deg)}}
+@media (prefers-reduced-motion:reduce){ .knum::after{display:none} }
+.kcap{margin-top:6px; color:#e9e5c6; font-weight:800; letter-spacing:.6px; text-transform:uppercase; font-size:12px; opacity:.95}
+.kpi b{color:#fff}
+.kpis .kpi:not(:last-child){position:relative}
+@media (min-width:821px){
+  .kpis .kpi:not(:last-child)::after{content:""; position:absolute; top:50%; right:-10px; transform:translateY(-50%); width:6px; height:6px; border-radius:50%; background:rgba(255,215,0,.35); box-shadow:0 0 0 4px rgba(255,215,0,.06)}
+}
+
+/* Cards */
+.grid{display:grid; gap:12px}
+@media (min-width:640px){ .grid--3{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:980px){ .grid--3{grid-template-columns:repeat(3,1fr)} }
+.card{
+  position:relative; overflow:hidden;
+  background:
+    radial-gradient(360px 180px at 20% -10%, rgba(255,215,0,.12), transparent 60%),
+    linear-gradient(180deg, rgba(255,215,0,.06), rgba(139,0,0,.07));
+  border:1px solid rgba(255,215,0,.18); border-radius:var(--radius); padding:16px;
+  transition:transform .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+@media (min-width:980px){ .card:hover{transform:translateY(-3px); border-color:rgba(255,215,0,.30); box-shadow:0 14px 34px rgba(255,215,0,.12)} }
+.pill{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-size:12px; color:#ffd; background:rgba(139,0,0,.30); border:1px solid rgba(255,215,0,.18)}
+
+/* Pricing */
+.pricing{display:grid; gap:16px}
+@media (min-width:980px){ .pricing{grid-template-columns:1.06fr .94fr} }
+.price-card{
+  padding:20px; border-radius:var(--radius-lg); border:1px solid rgba(255,215,0,.18);
+  background:
+    radial-gradient(360px 230px at 18% 0%, rgba(255,215,0,.14), transparent 60%),
+    radial-gradient(360px 260px at 82% 110%, rgba(139,0,0,.16), transparent 60%),
+    linear-gradient(180deg, rgba(255,215,0,.06), rgba(139,0,0,.06));
+}
+.stack{display:grid; gap:8px; margin:8px 0 12px}
+.check{display:flex; align-items:center; gap:8px; font-size:14px; color:#efe6b2}
+.strike{opacity:.75; text-decoration:line-through}
+
+.price-highlight{
+  display:inline-grid; grid-auto-flow:column; align-items:baseline; gap:12px;
+  margin:10px 0 0; padding:12px 14px; border-radius:16px;
+  background:rgba(255,215,0,.06); border:1px solid rgba(255,215,0,.22);
+  box-shadow:0 8px 40px rgba(255,215,0,.08); contain:paint;
+}
+.currency{
+  font:700 22px/1 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:linear-gradient(180deg,#fff,var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  margin-right:-6px; font-variant-numeric:lining-nums tabular-nums;
+  -webkit-font-feature-settings:"lnum"1,"tnum"1,"liga"0,"dlig"0; font-feature-settings:"lnum"1,"tnum"1,"liga"0,"dlig"0
+}
+.amount{
+  font:900 clamp(60px, 12vw, 96px)/0.9 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  letter-spacing:-1px; background:linear-gradient(180deg,#fff,var(--gold));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 10px 26px rgba(255,215,0,.16);
+  font-variant-numeric:lining-nums tabular-nums;
+  -webkit-font-feature-settings:"lnum"1,"tnum"1,"liga"0,"dlig"0; font-feature-settings:"lnum"1,"tnum"1,"liga"0,"dlig"0
+}
+.price-label{font:800 13px/1 Inter,system-ui; color:#0a0a0f; padding:7px 12px; border-radius:999px; background:linear-gradient(135deg,var(--gold),#f7e889); box-shadow:var(--ring); white-space:nowrap}
+.after{margin-left:2px; font-size:13px; color:#e9e0ae; white-space:nowrap}
+
+.billing{margin-top:12px; padding:12px; border-radius:14px; background:rgba(255,215,0,.05); border:1px solid rgba(255,215,0,.16); color:#dcd6ab; font-size:13px}
+
+.slider{border:1px solid rgba(255,215,0,.16); border-radius:var(--radius-lg); padding:18px; background:linear-gradient(180deg, rgba(255,215,0,.05), rgba(139,0,0,.06))}
+.slide{opacity:0; transform:translateY(6px); transition:opacity .4s ease, transform .4s ease}
+.slide.active{opacity:1; transform:none}
+
+/* Affiliates */
+.aff{
+  border:1px solid rgba(255,215,0,.18); border-radius:20px; padding:20px;
+  background:radial-gradient(380px 180px at 18% 0%, rgba(255,215,0,.12), transparent 60%), linear-gradient(180deg, rgba(255,215,0,.05), rgba(139,0,0,.10));
+}
+.aff-grid{display:grid; gap:12px}
+@media (min-width:900px){ .aff-grid{grid-template-columns:1.1fr .9fr} }
+.badge{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,215,0,.2); background:rgba(255,215,0,.06); color:#ffef9a; font-size:12px}
+.list{display:grid; gap:8px; margin-top:10px}
+.list .row{display:flex; align-items:center; gap:10px; color:#e9e5c6; font-size:14px}
+.row svg{color:var(--gold-soft)}
+
+/* FAQ */
+.faq{border:1px solid rgba(255,215,0,.16); border-radius:20px; overflow:hidden}
+.faq details{border-bottom:1px solid rgba(255,215,0,.10); background:linear-gradient(180deg, rgba(255,215,0,.04), rgba(139,0,0,.06))}
+.faq details:last-child{border-bottom:0}
+.faq summary{
+  cursor:pointer; list-style:none; padding:14px 16px; font-weight:800; color:#ffef9a; position:relative;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq .ans{padding:0 16px 16px 16px; color:#e9e5c6; font-size:14px}
+
+/* Footer */
+footer{position:relative; padding:58px 0 38px; color:#cfcfcf; overflow:hidden}
+footer::before, footer::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    radial-gradient(#ffd700 1.1px, transparent 1.2px),
+    radial-gradient(#ffd700 0.8px, transparent 1px);
+  background-size:120px 120px, 90px 90px;
+  background-position:0 0, 30px 20px; opacity:.18;
+}
+footer::after{opacity:.10; transform:translateY(10px)}
+.footer-grid{display:grid; gap:28px; align-items:start; grid-template-columns:1fr}
+@media (min-width:900px){ .footer-grid{grid-template-columns:1.1fr .9fr .9fr} }
+.f-title{font-family: Cinzel, Georgia, serif; color:#f2d66a; letter-spacing:.6px; font-variant-caps:small-caps; font-size:22px; margin:0 0 12px; text-shadow:0 12px 28px rgba(255,215,0,.12)}
+.f-text{color:#d7d2b0}
+.f-links{display:grid; gap:12px}
+.f-links a{color:#bfc0c9; font-weight:600}
+.f-links a:hover{color:#ffe289}
+.socials{display:flex; gap:12px; margin-top:14px}
+.bubble{width:42px; height:42px; display:inline-grid; place-items:center; border-radius:50%; border:1px solid rgba(255,215,0,.35); background:linear-gradient(180deg, rgba(255,215,0,.06), rgba(139,0,0,.10)); box-shadow:0 10px 30px rgba(255,215,0,.10); color:#ffe289}
+.bubble:hover{transform:translateY(-2px)}
+.footer-cta{margin-top:26px; max-width:520px; padding:18px 20px; border-radius:18px; border:1px solid rgba(255,215,0,.18); background:radial-gradient(380px 180px at 18% 0%, rgba(255,215,0,.12), transparent 60%), linear-gradient(180deg, rgba(255,215,0,.05), rgba(139,0,0,.10))}
+.footer-cta h4{margin:0 0 8px; font-size:20px; font-family: Cinzel, Georgia, serif; color:#ffdf66; letter-spacing:.4px}
+.footer-cta p{margin:0 0 16px; color:#e9e5c6}
+.footer-cta .cta-btn{display:inline-flex; align-items:center; gap:10px; padding:14px 22px; border-radius:999px; font-weight:900; font-size:15px; color:#111; background:linear-gradient(135deg, var(--gold), #f7e889); box-shadow:0 18px 40px rgba(255,215,0,.25); border:1px solid rgba(0,0,0,.25)}
+.foot-bottom{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:26px; padding-top:18px; border-top:1px solid rgba(255,215,0,.12); color:#b8b8c0; font-size:12px}
+
+/* Utilities */
+.reveal{opacity:0; transform:translateY(10px); transition:opacity .55s ease, transform .55s ease}
+.reveal.in{opacity:1; transform:none}
+.cv{content-visibility:auto; contain-intrinsic-size:1px 1000px}
+:focus-visible{outline:2px solid rgba(255,215,0,.7); outline-offset:2px; border-radius:8px}
+@media (prefers-reduced-motion:reduce){ .shimmer::before{display:none} .hero-halo{animation:none} }
+
+/* ========= Sticky CTA (mobile) ========= */
+.sticky-cta{position:fixed; left:12px; right:12px; bottom:12px; z-index:70; display:none}
+.sticky-cta .btn{width:100%; justify-content:center}
+@media (max-width:900px){ .sticky-cta{display:block} }
+</style>
+</head>
+<body>
+<div class="velvet" aria-hidden="true"></div>
+
+<!-- ===== Inline SVG Icons ===== -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!-- UI -->
+  <symbol id="i-key" viewBox="0 0 24 24"><path fill="currentColor" d="M14 3a5 5 0 0 0-4.58 7.06L2 17.5V21h3.5l1.79-1.79h2.12V17.1l1.8-1.8A5 5 0 1 0 14 3m0 2a3 3 0 1 1 0 6a3 3 0 0 1 0-6"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path fill="currentColor" d="M5 14s1.5-4.5 6-9c4.5-4.5 9-6 9-6s-1.5 4.5-6 9c-4.5 4.5-9 6-9 6Zm3 3l3 3l-2 1l-4-4l1-2l2 2Z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path fill="currentColor" d="M12 5c-7 0-10 7-10 7s3 7 10 7s10-7 10-7s-3-7-10-7Zm0 11a4 4 0 1 1 0-8a4 4 0 0 1 0 8Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.2L4.8 12l-1.4 1.4L9 19l12-12l-1.4-1.4z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.1L22 9.2l-5 4.9L18.2 22L12 18.8L5.8 22L7 14.1L2 9.2l7.1-1.1L12 2z"/></symbol>
+
+  <!-- Hero feature icons -->
+  <symbol id="i-box" viewBox="0 0 24 24"><path fill="currentColor" d="M4 7l8-4l8 4v10l-8 4l-8-4V7zm8 2L6 6.5V9l6 3l6-3V6.5L12 9z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path fill="currentColor" d="M9 4l2-2h2l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3zm3 4a5 5 0 1 0 .001 10.001A5 5 0 0 0 12 8z"/></symbol>
+  <symbol id="i-sheet" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h8l4 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m7 1.5V7h3.5M7 9h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/></symbol>
+
+  <!-- Extra icons -->
+  <symbol id="i-truck" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h11v7h2.5l2.5 3v2h-1a2 2 0 1 1-4 0H9a2 2 0 1 1-4 0H3V6zm13 2h2l2 3h-4V8zM7 19a1 1 0 1 0 0-2a1 1 0 0 0 0 2zm10 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path fill="currentColor" d="M16 11a4 4 0 1 0-4-4a4 4 0 0 0 4 4Zm-8 1a3 3 0 1 0-3-3a3 3 0 0 0 3 3Zm0 2c-2.67 0-8 1.34-8 4v2h10v-2c0-1.2.63-2.27 1.64-3A8.2 8.2 0 0 0 8 14Zm8 0c-1.85 0-5.5.93-5.5 3v2H22v-2c0-2.07-3.65-3-6-3Z"/></symbol>
+
+  <!-- Socials -->
+  <symbol id="i-ig" viewBox="0 0 24 24"><path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5m5 5a5 5 0 1 0 5 5a5 5 0 0 0-5-5m0 2.5A2.5 2.5 0 1 1 9.5 12A2.5 2.5 0 0 1 12 9.5M18 6.5a1 1 0 1 0 1 1a1 1 0 0 0-1-1"/></symbol>
+  <symbol id="i-tt" viewBox="0 0 24 24"><path fill="currentColor" d="M14 2h3c.1 1.6.5 2.7 1.3 3.6C19.8 6.4 20.8 7 22 7v3c-1.6.1-3.1-.3-4-1v6.3A6.7 6.7 0 0 1 11.3 22C8.4 22 6 19.6 6 16.7S8.4 11.3 11.3 11.3c.2 0 .5 0 .7.1V14a3.3 3.3 0 1 0 0 6.6A3.3 3.3 0 0 0 15.3 17V2Z"/></symbol>
+  <symbol id="i-yt" viewBox="0 0 24 24"><path fill="currentColor" d="M10 15.5v-7l6 3.5M3 6.5c0-1.7 1.3-3 3-3h12c1.7 0 3 1.3 3 3v11c0 1.7-1.3 3-3 3H6c-1.7 0-3-1.3-3-3z"/></symbol>
+  <symbol id="i-discord" viewBox="0 0 24 24"><path fill="currentColor" d="M20.3 4.5A17 17 0 0 0 16 3l-.2.4A14 14 0 0 1 12 3c-1.2 0-2.5.2-3.8.5L8 3a17 17 0 0 0-4.3 1.5C1.4 8.3.9 13.2 1 18c1.6 1.2 3.8 2 6.1 2l.7-.9c-.8-.2-1.5-.6-2.2-1c.2-.1.3-.3.4-.4c1 .4 2 .7 3 .9c.6.1 1.3.2 2 .2s1.3 0 2-.2c1-.2 2-.5 3-.9l.4.4c-.7.4-1.4.8-2.2 1l.7.9c2.3 0 4.5-.8 6.1-2c.2-3.1-.1-7.9-2.7-13.5M9.5 14c-.7 0-1.3-.7-1.3-1.5s.6-1.5 1.3-1.5S10.8 11.7 10.8 12.5S10.2 14 9.5 14m5 0c-.7 0-1.3-.7-1.3-1.5s.6-1.5 1.3-1.5s1.3.7 1.3 1.5S15.2 14 14.5 14Z"/></symbol>
+</svg>
+
+<!-- ========= NAV ========= -->
+<nav class="nav" id="nav" role="navigation" aria-label="Primary">
+  <div class="wrap nav__in">
+    <a href="#top" aria-label="Home"><strong class="brand__name">Treasuretto&nbsp;Vault</strong></a>
+    <div class="menu" id="menu">
+      <a href="#features">Features</a>
+      <a href="#ai">AI Tools</a>
+      <a href="#affiliates">Affiliates</a>
+      <a href="#faq">FAQ</a>
+      <a href="#pricing" class="cta-nav"><svg width="16" height="16" aria-hidden="true"><use href="#i-key"/></svg> Get Started</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">☰</button>
+  </div>
+  <div class="drawer" id="drawer">
+    <div class="wrap" style="padding:10px 0">
+      <a href="#features">Features</a>
+      <a href="#ai">AI Tools</a>
+      <a href="#affiliates">Affiliates</a>
+      <a href="#faq">FAQ</a>
+      <a href="signup.html"><svg width="16" height="16" style="vertical-align:-2px" aria-hidden="true"><use href="#i-key"/></svg> Get Started</a>
+    </div>
+  </div>
+</nav>
+<div class="spacer" aria-hidden="true"></div>
+
+<!-- ========= HERO ========= -->
+<header id="top" class="hero">
+  <div class="hero-halo" aria-hidden="true"></div>
+  <div class="specks" aria-hidden="true"></div>
+
+  <div class="wrap hero__grid">
+    <span class="tagline"><svg width="16" height="16" style="vertical-align:-3px" aria-hidden="true"><use href="#i-star"/></svg> Members-Only Platform for Vintage Resellers</span>
+
+    <h1 class="hero__title shimmer">Resell Faster. Keep More Profit.</h1>
+
+    <p class="sub">Playbooks, AI tools, and spreadsheets that cut listing time 50%+ and protect your margins.</p>
+
+    <div class="hero-feats" aria-label="Key modules">
+      <div class="hfeat" role="group" aria-label="Shipping Cheat Sheet">
+        <svg aria-hidden="true"><use href="#i-box"/></svg>
+        <div class="cap">Shipping Cheat Sheet</div>
+        <div class="subcap">Save on every label</div>
+      </div>
+      <div class="hfeat" role="group" aria-label="Photography Vault">
+        <svg aria-hidden="true"><use href="#i-camera"/></svg>
+        <div class="cap">Photography Vault</div>
+        <div class="subcap">Listings that pop</div>
+      </div>
+      <div class="hfeat" role="group" aria-label="Precision Tracking Spreadsheets">
+        <svg aria-hidden="true"><use href="#i-sheet"/></svg>
+        <div class="cap">Precision Tracking</div>
+        <div class="subcap">Track COGS & velocity</div>
+      </div>
+    </div>
+
+    <div class="cta-row" role="group" aria-label="Primary calls to action">
+      <a href="signup.html" class="btn btn--gold" aria-label="Start free trial"><svg width="18" height="18" aria-hidden="true"><use href="#i-rocket"/></svg> Start 2-Day Free Trial</a>
+      <a href="#features" class="btn btn--ghost" aria-label="See what's inside"><svg width="16" height="16" aria-hidden="true"><use href="#i-eye"/></svg> See What’s Inside</a>
+    </div>
+
+    <div class="trust" aria-label="Trust badges">
+      <span class="tb">30-day billing fix guarantee</span>
+      <span class="tb">Cancel in 1 click</span>
+      <span class="tb">Secure via Stripe</span>
+    </div>
+
+    <div class="hero-micro">$15 first month • then $25/mo • Cancel anytime</div>
+
+    <div class="platforms" aria-label="Platforms we focus on">
+      <span class="muted" style="font-size:12px; opacity:.9">Optimized for</span>
+      <span class="logo-word depop">depop</span>
+      <span class="logo-word ebay">eBay</span>
+      <span class="logo-word grailed">GRAILED</span>
+    </div>
+  </div>
+</header>
+
+<!-- ========= PROOF STRIP ========= -->
+<section class="proof reveal" aria-label="Product metrics">
+  <div class="wrap">
+    <div class="kpis">
+      <div class="kpi">
+        <svg class="kicon" aria-hidden="true"><use href="#i-sheet"/></svg>
+        <span class="knum" data-knum="6214">6,214</span>
+        <div class="kcap">Titles generated</div>
+      </div>
+      <div class="kpi">
+        <svg class="kicon" aria-hidden="true"><use href="#i-truck"/></svg>
+        <span class="knum" data-knum="38900">$38,900</span>
+        <div class="kcap">Shipping savings</div>
+      </div>
+      <div class="kpi">
+        <svg class="kicon" aria-hidden="true"><use href="#i-users"/></svg>
+        <span class="knum" data-knum="1200">1,200+</span>
+        <div class="kcap">Active sellers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <!-- FEATURES GRID -->
+  <section id="features" class="reveal cv" aria-labelledby="modules-title">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="modules-title" class="title">Vault Modules</h2>
+        <div class="muted">Everything you need to run a cleaner, faster resale operation — no fluff.</div>
+      </div>
+
+      <div class="grid grid--3">
+        <article class="card"><span class="pill"><svg width="16" height="16" style="vertical-align:-3px" aria-hidden="true"><use href="#i-check"/></svg> Shipping Cheat Sheet</span><h3 style="margin:8px 0 4px; font-size:18px">Save on every label</h3><p class="muted">Carrier thresholds, zones, and label picks to protect margin.</p></article>
+        <article class="card"><span class="pill" style="background:rgba(255,215,0,.15)"><svg width="16" height="16" style="vertical-align:-3px" aria-hidden="true"><use href="#i-check"/></svg> Photography + Styling</span><h3 style="margin:8px 0 4px; font-size:18px">Make listings pop</h3><p class="muted">Lighting setups & styling frameworks to stand out and move stock.</p></article>
+        <article class="card"><span class="pill"><svg width="16" height="16" style="vertical-align:-3px" aria-hidden="true"><use href="#i-check"/></svg> Precision Tracking</span><h3 style="margin:8px 0 4px; font-size:18px">Know your numbers</h3><p class="muted">COGS, margin, and sell-through sheets that keep you sharp.</p></article>
+        <article class="card"><span class="pill"><svg width="16" height="16" style="vertical-align:-3px" aria-hidden="true"><use href="#i-check"/></svg> Weekly Trends + Drops</span><h3 style="margin:8px 0 4px; font-size:18px">Source with signal</h3><p class="muted">What’s moving now so you don’t get stuck with dead stock.</p></article>
+        <article class="card"><span class="pill"><svg width="16" height="16" style="vertical-align:-3px" aria-hidden="true"><use href="#i-check"/></svg> Listing Templates</span><h3 style="margin:8px 0 4px; font-size:18px">Copy that converts</h3><p class="muted">Platform-specific templates and prompts that rank and sell.</p></article>
+        <article class="card"><span class="pill"><svg width="16" height="16" style="vertical-align:-3px" aria-hidden="true"><use href="#i-check"/></svg> Ultimate Sourcing</span><h3 style="margin:8px 0 4px; font-size:18px">Negotiate & win</h3><p class="muted">Decision trees & scripts for bins, rag houses, and wholesale.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING + TESTIMONIALS -->
+  <section id="pricing" class="reveal cv" aria-labelledby="pricing-title">
+    <div class="wrap pricing">
+      <div class="price-card">
+        <div class="head" style="margin-bottom:8px">
+          <h2 id="pricing-title" class="title">Join The Vault</h2>
+          <div class="muted">Gold-tier access. Cancel anytime.</div>
+        </div>
+
+        <div class="stack">
+          <div class="check"><svg width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg> 2-day free trial — explore everything</div>
+          <div class="check"><svg width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg> First month only <span class="strike">$25</span> → <strong style="margin-left:6px; color:#fff">$15</strong></div>
+          <div class="check"><svg width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg> Then $25/mo — access to updates & new tools</div>
+          <div class="check"><svg width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg> AI tools, templates, spreadsheets, weekly notes</div>
+          <div class="roi">If the <b>Shipping Cheat Sheet</b> saves you <b>$20/week</b> on labels → that’s <b>$80/mo</b>. The Vault pays for itself <b>3×</b>.</div>
+        </div>
+
+        <div class="price-highlight" aria-label="$15 first month, then $25 per month">
+          <span class="currency" aria-hidden="true">$</span>
+          <span class="amount" aria-hidden="true">15</span>
+          <span class="price-label">First month</span>
+          <span class="after">then $25/mo</span>
+        </div>
+
+        <div class="billing">
+          <strong>How billing works:</strong>
+          <div style="margin-top:6px">
+            Start a 2-day free trial. If you continue, it’s $15 for the first month and $25/mo after. You can cancel in one click from your account settings.
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px">
+          <a href="https://treasurettovaultt.lemonsqueezy.com/buy/5c045cdc-5948-4e7f-b706-612093e33d30" class="btn btn--gold" aria-label="Start free trial from pricing"><svg width="16" height="16" aria-hidden="true"><use href="#i-key"/></svg> Start Free Trial</a>
+          <a href="#ai" class="btn btn--ghost" aria-label="Explore AI tools"><svg width="16" height="16" aria-hidden="true"><use href="#i-eye"/></svg> Explore AI Tools</a>
+        </div>
+      </div>
+
+      <!-- Testimonials -->
+      <div id="testimonials" class="slider" aria-label="Testimonials">
+        <div class="slide active">
+          <div style="color:var(--gold); letter-spacing:2px">
+            <svg width="14" height="14" style="vertical-align:-2px" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg>
+          </div>
+          <p style="margin:8px 0 4px">“The photo workflow shaved hours off listing days.”</p>
+          <div class="muted">— Alex, vintage tees seller</div>
+        </div>
+        <div class="slide">
+          <div style="color:var(--gold); letter-spacing:2px">
+            <svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg>
+          </div>
+          <p style="margin:8px 0 4px">“Pricing prompts made it easier to say ‘no’ to lowball offers.”</p>
+          <div class="muted">— Maya, eBay workwear</div>
+        </div>
+        <div class="slide">
+          <div style="color:var(--gold); letter-spacing:2px">
+            <svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg><svg width="14" height="14" aria-hidden="true"><use href="#i-star"/></svg>
+          </div>
+          <p style="margin:8px 0 4px">“The spreadsheets helped me stop guessing on margins.”</p>
+          <div class="muted">— Ren, multi-platform seller</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI TOOLS -->
+  <section id="ai" class="reveal cv" aria-labelledby="ai-title">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="ai-title" class="title">Built-In AI Tools</h2>
+        <div class="muted">Operate faster than everyone else.</div>
+      </div>
+
+      <div class="grid grid--3">
+        <article class="card"><h3 style="margin:0 0 6px; font-size:16px">Title Genius</h3><p class="muted">SEO titles tuned to buyer intent across platforms.</p></article>
+        <article class="card"><h3 style="margin:0 0 6px; font-size:16px">Price Predictor</h3><p class="muted">Comps, seasonality, momentum → price windows.</p></article>
+        <article class="card"><h3 style="margin:0 0 6px; font-size:16px">Negotiation Scripts</h3><p class="muted">DM templates that nudge buyers & close offers.</p></article>
+        <article class="card"><h3 style="margin:0 0 6px; font-size:16px">Trend Radar</h3><p class="muted">Signals on what’s heating up so you source with confidence.</p></article>
+        <article class="card"><h3 style="margin:0 0 6px; font-size:16px">Listing Templates</h3><p class="muted">Copy blocks & photo prompts per marketplace.</p></article>
+        <article class="card"><h3 style="margin:0 0 6px; font-size:16px">Inventory Sheets</h3><p class="muted">Spreadsheets for costs, margin, and velocity.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFFILIATES -->
+  <section id="affiliates" class="reveal cv" aria-labelledby="aff-title">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="aff-title" class="title">Affiliate Program</h2>
+        <div class="muted">Earn <strong style="color:#ffef9a">30% recurring</strong> for every member you refer.</div>
+      </div>
+
+      <div class="aff aff-grid">
+        <div>
+          <span class="badge"><svg width="14" height="14" style="vertical-align:-2px" aria-hidden="true"><use href="#i-star"/></svg> Recurring, not one-off</span>
+          <div class="list">
+            <div class="row"><svg width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg> 30% lifetime commissions on active subscriptions</div>
+            <div class="row"><svg width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg> 60-day cookie window</div>
+            <div class="row"><svg width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg> Real-time dashboard & tracking links</div>
+            <div class="row"><svg width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg> Payouts monthly via Stripe</div>
+          </div>
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+            <a href="#join-aff" class="btn btn--gold">Become an Affiliate</a>
+            <a href="#faq" class="btn btn--ghost">Read FAQ</a>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <h3 style="margin:0 0 8px; font-size:18px">Who is it for?</h3>
+            <p class="muted" style="margin:0 0 8px">Creators, sellers, and communities in vintage, second-hand, or streetwear. If your audience lists or buys regularly, this fits.</p>
+            <h3 style="margin:12px 0 8px; font-size:18px">How it works</h3>
+            <p class="muted" style="margin:0">Apply → get your link → share honestly (no hype). We provide assets and messaging. You get paid as long as they stay subscribed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="reveal cv" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="faq-title" class="title">FAQ</h2>
+        <div class="muted">Straight answers. No fluff.</div>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>What exactly do I get inside the Vault?</summary>
+          <div class="ans">Playbooks for sourcing, listing, and pricing; weekly trends & drops; AI tools (titles, prices, negotiation scripts); listing templates; shipping cheat sheet; and precision spreadsheets for COGS, margin, and sell-through.</div>
+        </details>
+        <details>
+          <summary>How does the 2-day free trial + pricing work?</summary>
+          <div class="ans">Start a 2-day free trial. If you continue, it’s $15 for the first month and $25/mo after. You can cancel any time from your account settings.</div>
+        </details>
+        <details>
+          <summary>Is this a course?</summary>
+          <div class="ans">No. It’s an operating system for resellers — tools, templates, and weekly signals built by active sellers.</div>
+        </details>
+        <details>
+          <summary>Who is this best for?</summary>
+          <div class="ans">Resellers who list weekly and want repeatable systems. If you’re brand-new and want a get-rich-quick course, this isn’t it.</div>
+        </details>
+        <details>
+          <summary>Do you offer refunds?</summary>
+          <div class="ans">You can cancel any time before renewal. If something goes wrong with billing, contact support — we’ll make it right.</div>
+        </details>
+        <details>
+          <summary>How do affiliate payouts work?</summary>
+          <div class="ans">Affiliates earn 30% recurring for the life of each subscription. Payouts process monthly via Stripe with a 60-day cookie window.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="cta-final" class="reveal cv">
+    <div class="wrap">
+      <div class="price-card" style="text-align:center">
+        <h2 class="title" style="margin:0 0 8px">Unlock The Vault Now</h2>
+        <div class="muted" style="margin-bottom:14px">Try everything for 2 days. $15 first month, then $25/mo. Cancel anytime from your account.</div>
+        <a href="https://treasurettovaultt.lemonsqueezy.com/buy/5c045cdc-5948-4e7f-b706-612093e33d30" class="btn btn--gold" aria-label="Start free trial from final CTA"><svg width="16" height="16" aria-hidden="true"><use href="#i-key"/></svg> Start Free 2-Day Trial</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========= FOOTER ========= -->
+<footer id="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <h3 class="f-title">The Treasuretto Vault</h3>
+      <p class="f-text">Premium tools and resources for serious vintage resellers ready to scale.</p>
+
+      <div class="socials" aria-label="Social links">
+        <a class="bubble" href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" aria-hidden="true"><use href="#i-ig"/></svg></a>
+        <a class="bubble" href="#" target="_blank" rel="noopener" aria-label="TikTok"><svg width="20" height="20" aria-hidden="true"><use href="#i-tt"/></svg></a>
+        <a class="bubble" href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg width="20" height="20" aria-hidden="true"><use href="#i-yt"/></svg></a>
+        <a class="bubble" href="#" target="_blank" rel="noopener" aria-label="Discord"><svg width="20" height="20" aria-hidden="true"><use href="#i-discord"/></svg></a>
+      </div>
+
+      <div class="footer-cta">
+        <h4>Ready to Scale?</h4>
+        <p>Get the playbooks & tools we use ourselves.</p>
+        <a href="https://treasurettovaultt.lemonsqueezy.com/buy/5c045cdc-5948-4e7f-b706-612093e33d30" class="cta-btn"><svg width="16" height="16" style="vertical-align:-2px" aria-hidden="true"><use href="#i-key"/></svg> START FREE TRIAL</a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="f-title">Quick Links</h3>
+      <nav class="f-links" aria-label="Quick links">
+        <a href="#features">Vault Modules</a>
+        <a href="#ai">AI Tools</a>
+        <a href="#affiliates">Affiliates</a>
+        <a href="#faq">FAQ</a>
+        <a href="#pricing">Pricing</a>
+      </nav>
+    </div>
+
+    <div>
+      <h3 class="f-title">Support</h3>
+      <nav class="f-links" aria-label="Support links">
+        <a href="#">Help Center</a>
+        <a href="#">Contact Support</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="wrap foot-bottom">
+    <div>© <span id="year"></span> Treasuretto. Built for Resellers by Resellers.</div>
+    <div>All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- Sticky CTA (mobile) -->
+<div class="sticky-cta" aria-hidden="false">
+  <a class="btn btn--gold" href="https://treasurettovaultt.lemonsqueezy.com/buy/5c045cdc-5948-4e7f-b706-612093e33d30"><svg width="16" height="16" aria-hidden="true"><use href="#i-key"/></svg> Start Free Trial — 2 days • $15 first month</a>
+</div>
+
+<script>
+const qs = s => document.querySelector(s);
+const qsa = s => Array.from(document.querySelectorAll(s));
+
+// Year
+qs('#year').textContent = new Date().getFullYear();
+
+// Motion guards
+const conn = navigator.connection || navigator.webkitConnection || navigator.mozConnection;
+const saveData = !!(conn && conn.saveData);
+const lowMem = (navigator.deviceMemory && navigator.deviceMemory <= 4);
+const lowCPU = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const HEAVY_OK = !(saveData || lowMem || lowCPU || reduce);
+
+// Nav + active link
+const nav = qs('#nav');
+const onScroll = () => {
+  nav.classList.toggle('solid', scrollY > 8);
+  const links = qsa('.menu a:not(.cta-nav)');
+  const secs = links.map(a => qs(a.getAttribute('href'))).filter(Boolean);
+  const y = scrollY + 90; let active = -1;
+  secs.forEach((sec,i)=>{ const t=sec.offsetTop, b=t+sec.offsetHeight; if(y>=t && y<b) active=i; });
+  links.forEach((a,i)=>a.classList.toggle('active', i===active));
+};
+addEventListener('scroll', onScroll, {passive:true});
+addEventListener('load', onScroll);
+
+// Drawer
+const burger = qs('#burger'); const drawer = qs('#drawer'); let open = false;
+function setDrawer(state){ open = state; drawer.classList.toggle('open', open); burger.setAttribute('aria-expanded', String(open)); }
+burger?.addEventListener('click', ()=> setDrawer(!open));
+addEventListener('resize', ()=> { if(innerWidth>=900 && open) setDrawer(false); }, {passive:true});
+
+// Smooth scroll
+function hookLinks(scope){
+  qsa(`${scope} a[href^="#"]`).forEach(a=>{
+    a.addEventListener('click', e=>{
+      const id = a.getAttribute('href'); if(!id || id==='#') return;
+      const el = qs(id); if(!el) return;
+      e.preventDefault();
+      const top = el.getBoundingClientRect().top + scrollY - 70;
+      scrollTo({top, behavior:'smooth'}); if(scope==='#drawer') setDrawer(false);
+    });
+  });
+}
+hookLinks('#menu'); hookLinks('#drawer');
+
+// Reveal on view (stagger KPIs piggyback on this)
+const io = new IntersectionObserver((entries)=>{
+  for(const e of entries){
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  }
+},{threshold:.15});
+qsa('.reveal').forEach(el=>io.observe(el));
+
+// Testimonials slider (lazy start)
+(function(){
+  const box = qs('#testimonials'); if(!box) return;
+  const slides = qsa('#testimonials .slide');
+  let i=0, id=null, started=false;
+  const rot = ()=>{ slides[i].classList.remove('active'); i=(i+1)%slides.length; slides[i].classList.add('active'); };
+  const obs = new IntersectionObserver((e)=>{
+    if(e[0].isIntersecting && !started){ started = true; id = setInterval(rot, 4200); obs.disconnect(); }
+  }, {threshold:.2});
+  obs.observe(box);
+  document.addEventListener('visibilitychange', ()=>{
+    if(!started) return;
+    if(document.hidden && id){ clearInterval(id); id=null; }
+    else if(!document.hidden && !id){ id=setInterval(rot,4200); }
+  });
+})();
+
+// Disable shimmer motion if device prefers savings
+if(!HEAVY_OK){ qsa('.shimmer').forEach(el=> el.classList.remove('shimmer')); }
+
+// ===== Performance: mark hero as high priority image slot if you add one =====
+// <img src="/hero.webp" alt="The Vault dashboard" fetchpriority="high" width="1600" height="900" loading="eager">
+
+// ===== KPI count-up on reveal =====
+(function(){
+  const els = qsa('.knum'); if(!els.length) return;
+  const fmt = (n)=> n.toLocaleString('en-US');
+  const ioK = new IntersectionObserver((entries)=>{
+    entries.forEach(({isIntersecting,target})=>{
+      if(!isIntersecting) return;
+      ioK.unobserve(target);
+      const raw = Number(target.getAttribute('data-knum')) || 0;
+      const isMoney = /\$/.test(target.textContent);
+      const isPlus = /\+/.test(target.textContent);
+      const dur = 900; const start = performance.now();
+      const step = (t)=>{
+        const p = Math.min(1,(t-start)/dur);
+        const val = Math.floor(raw * (0.15 + 0.85*p));
+        target.textContent = (isMoney?'$':'') + fmt(val) + (isPlus?'+':'');
+        if(p<1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  },{threshold:.4});
+  els.forEach(el=> ioK.observe(el));
+})();
+</script>
+
+<!-- ===== JSON-LD FAQ Schema (SEO) ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What exactly do I get inside the Vault?",
+      "acceptedAnswer": {"@type":"Answer","text":"Playbooks for sourcing, listing, and pricing; weekly trends & drops; AI tools; listing templates; shipping cheat sheet; and precision spreadsheets for COGS, margin, and sell-through."}
+    },
+    {
+      "@type": "Question",
+      "name": "How does the 2-day free trial + pricing work?",
+      "acceptedAnswer": {"@type":"Answer","text":"Start a 2-day free trial. If you continue, it’s $15 for the first month and $25/mo after. You can cancel any time from your account settings."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is this a course?",
+      "acceptedAnswer": {"@type":"Answer","text":"No. It’s an operating system for resellers — tools, templates, and weekly signals built by active sellers."}
+    }
+  ]
+}
+</script>
+</body>
+</html>

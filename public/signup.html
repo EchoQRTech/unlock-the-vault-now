@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ===================================================================
+       The Treasuretto Vault — SIGNUP (Ultra-fast, luxury, single-file)
+       - Zero images, zero frameworks, minimal JS, GPU-friendly effects
+       - Mobile-first, accessible, conversion-tuned UI
+       =================================================================== -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="description" content="Join The Treasuretto Vault — elite reseller tools, AI systems, and playbooks. Free 2-day trial • $25/mo after." />
+  <title>Sign up — The Treasuretto Vault</title>
+
+  <!-- Performance: preconnect fonts (display=swap to avoid blocking) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================
+       THEME TOKENS / BASELINE
+       ========================= */
+    :root{
+      --bg:#0a0a0f; --bg-2:#0f0f16; --bg-3:#0b0b11;
+      --ink:#ececf1; --ink-soft:#d9d9e2; --muted:#b0b0c0; --dim:#8e8ea0;
+      --gold:#FFD700; --gold-soft:#ffe79a; --gold-deep:#b88a00;
+      --velvet-1:#3b0d16; --velvet-2:#61121f; --velvet-3:#8b192a; --velvet-4:#b91f35;
+      --success:#46d29a; --danger:#ff5670; --warn:#f2c94c;
+
+      --card:#11111a; --card-2:#14141e;
+      --radius:20px; --r-sm:12px;
+      --e:cubic-bezier(.2,.7,.2,1);
+
+      --ring:0 0 0 2px rgba(255,215,0,.25), 0 0 0 6px rgba(255,215,0,.08);
+      --shadow:0 12px 36px rgba(0,0,0,.45), 0 2px 12px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--ink); background: var(--bg);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      letter-spacing:.01em;
+      /* Ultra-lightweight “velvet + gold” ambience (no images) */
+      background:
+        radial-gradient(1200px 700px at 20% -10%, rgba(185,31,53,.22), transparent 60%),
+        radial-gradient(900px 600px at 110% 10%, rgba(255,215,0,.10), transparent 60%),
+        linear-gradient(180deg,#09090d 0%, #07070b 100%);
+    }
+    @media (prefers-reduced-motion:no-preference){ :root{scroll-behavior:smooth} }
+
+    a{color:var(--gold-soft); text-underline-offset:3px}
+    a:hover{color:var(--gold)}
+
+    /* =================
+       TOP LOGIN PILL
+       ================= */
+    .topbar{
+      position:fixed; inset:0 0 auto 0; z-index:50;
+      display:flex; justify-content:flex-end; padding:.8rem clamp(12px,3vw,28px);
+      pointer-events:none;
+    }
+    .topbar a{
+      pointer-events:auto; text-decoration:none; color:var(--muted);
+      font-size:.92rem; padding:.5rem .9rem; border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 10px 24px rgba(0,0,0,.35);
+      transition:all .25s var(--e);
+    }
+    .topbar a:hover{ color:var(--ink); border-color:rgba(255,215,0,.35); box-shadow:var(--ring); }
+
+    /* ===============
+       GRID CONTAINER
+       =============== */
+    .wrap{
+      max-width:1220px; margin:0 auto; padding:calc(76px + 2vh) clamp(14px,3vw,28px) 28px;
+      display:grid; gap:22px; grid-template-columns:1fr; align-items:stretch;
+      content-visibility:auto; contain-intrinsic-size: 1200px 1200px;
+    }
+    @media (min-width: 980px){
+      .wrap{ grid-template-columns: 1.05fr .95fr; gap:28px; padding-top:calc(90px + 2.2vh); }
+    }
+
+    /* ===========
+       LEFT PANEL
+       =========== */
+    .left{ display:flex; flex-direction:column; gap:16px; contain:content; }
+    .brand{ display:flex; align-items:center; gap:.7rem; user-select:none; }
+    .brand__mark{
+      width:44px; height:44px; border-radius:12px; display:grid; place-items:center;
+      background:linear-gradient(135deg,#1b1b24, #0f0f16);
+      border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow);
+      position:relative; overflow:hidden;
+    }
+    .brand__mark::after{ /* subtle gold gleam */
+      content:""; position:absolute; inset:-40% -40% auto auto; height:200%; width:40%;
+      transform:rotate(35deg); background:linear-gradient(90deg, transparent, rgba(255,215,0,.18), transparent);
+      opacity:.8; pointer-events:none;
+    }
+    .brand__name{
+      font-family:Cinzel, serif; font-weight:900; letter-spacing:.02em;
+      font-size: clamp(1.04rem,2vw,1.15rem); color:var(--gold-soft);
+      text-shadow:0 1px 0 rgba(0,0,0,.6);
+    }
+
+    .h1{
+      margin:.4rem 0 0 0; font-family:Cinzel, serif; font-weight:900; line-height:1.06;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      background:linear-gradient(180deg,#fff,#f3ecd3 50%, #c8a95d 88%);
+      -webkit-background-clip:text; background-clip:text; color:transparent; text-wrap:balance;
+    }
+    .sub{ color:var(--muted); font-size:clamp(.98rem,1.6vw,1.05rem); }
+    .offer{
+      width:max-content; display:inline-flex; align-items:center; gap:.55rem;
+      padding:.55rem .85rem; border-radius:999px; font-weight:700; letter-spacing:.02em; font-size:.9rem;
+      color:#fff8e6;
+      background:linear-gradient(180deg, rgba(255,215,0,.14), rgba(255,215,0,.07));
+      border:1px solid rgba(255,215,0,.35); box-shadow:0 8px 22px rgba(255,215,0,.08);
+    }
+
+    .features{ display:grid; gap:12px; margin-top:8px; }
+    .card{
+      position:relative; padding:16px 16px 16px 56px; border-radius:var(--radius);
+      background:
+        radial-gradient(120% 140% at 0% 0%, rgba(255,215,0,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow);
+      transition:transform .28s var(--e), border-color .3s var(--e), box-shadow .3s var(--e);
+      content-visibility:auto;
+    }
+    .card:hover{ transform:translateY(-2px); border-color:rgba(255,215,0,.4); box-shadow:0 14px 44px rgba(255,215,0,.08), var(--shadow); }
+    .dot{
+      position:absolute; left:16px; top:16px; width:26px; height:26px; border-radius:8px; display:grid; place-items:center;
+      background:linear-gradient(135deg,#241f12,#141316); border:1px solid rgba(255,215,0,.35);
+    }
+    .card h3{ margin:0 0 6px 0; color:#fff4c6; font-size:1rem; }
+    .card p{ margin:0; color:var(--dim); font-size:.95rem; }
+
+    .rating{ margin-top:6px; display:flex; align-items:center; gap:.5rem; color:var(--muted) }
+    .stars{ display:inline-flex; gap:2px }
+    .stars svg{ width:18px; height:18px; fill:var(--gold) }
+
+    /* ===========
+       RIGHT PANEL
+       =========== */
+    .formWrap{ position:relative; contain:content; }
+    .form{
+      position:relative; background:
+        radial-gradient(130% 160% at 110% -10%, rgba(185,31,53,.22), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: clamp(16px,2.4vw,24px);
+      box-shadow:var(--shadow);
+      padding: clamp(16px,2.5vw,32px);
+      overflow:hidden; isolation:isolate;
+    }
+    /* Secure ribbon */
+    .form::after{
+      content:"Secure Checkout";
+      position:absolute; top:14px; right:-44px; transform:rotate(35deg);
+      font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:.72rem;
+      color:#1c0b0f;
+      background:linear-gradient(135deg,var(--velvet-4),var(--velvet-3));
+      border:1px solid rgba(255,255,255,.1);
+      padding:.35rem 2.6rem; box-shadow:0 14px 34px rgba(0,0,0,.45);
+      opacity:.95; pointer-events:none;
+    }
+
+    .h2{
+      margin:.2rem 0 .7rem 0; font-family:Cinzel, serif; font-weight:900; letter-spacing:.01em;
+      font-size:clamp(1.3rem,3.8vw,1.7rem);
+      background:linear-gradient(180deg,#fff,#f1e6c7 50%,#cbb06b);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .lead{ margin:0 0 .7rem 0; color:var(--muted); font-size:.98rem; }
+
+    form{ display:grid; gap:12px; }
+    .row{ display:grid; gap:12px; grid-template-columns:1fr; }
+    @media (min-width:640px){ .row--2{ grid-template-columns:1fr 1fr; } }
+
+    label{ display:block; font-size:.86rem; color:var(--muted); margin:0 0 .35rem 2px; }
+    .input, select{
+      width:100%; background:var(--bg-3); color:var(--ink);
+      border:1px solid rgba(255,255,255,.10); border-radius:12px;
+      padding:.85rem .95rem; outline:none;
+      transition:border-color .2s var(--e), box-shadow .2s var(--e), transform .2s var(--e);
+    }
+    .input::placeholder{ color:#6f6f86 }
+    .input:focus, select:focus{ border-color:rgba(255,215,0,.45); box-shadow:var(--ring); }
+
+    .pw{ position:relative; }
+    .toggle{
+      position:absolute; right:8px; top:50%; transform:translateY(-50%);
+      background:transparent; border:0; color:var(--muted); cursor:pointer; padding:.35rem; border-radius:8px;
+    }
+    .toggle:hover{ color:var(--ink) }
+
+    .meter{ margin-top:6px; height:10px; border-radius:999px; background:#16161e; border:1px solid rgba(255,255,255,.06); overflow:hidden; }
+    .meter__bar{
+      height:100%; width:0%;
+      background:linear-gradient(90deg, #842, #b53, #d64, #f8b84d);
+      transition:width .28s var(--e), filter .28s var(--e);
+      filter:saturate(1.15);
+    }
+    .meter__label{ margin-top:6px; font-size:.85rem; color:var(--dim); }
+
+    .terms{ display:flex; gap:.6rem; align-items:flex-start; margin-top:.2rem; color:var(--muted); font-size:.9rem; }
+    .terms input{ margin-top:.2rem }
+
+    .btn{
+      appearance:none; border:0; cursor:pointer; width:100%;
+      display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
+      font-weight:900; letter-spacing:.02em; padding:1rem 1.1rem; border-radius:14px; color:#fffaf3;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)),
+        linear-gradient(135deg,var(--velvet-4),var(--velvet-3) 46%,var(--velvet-2));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:0 14px 42px rgba(185,31,53,.35), 0 2px 0 rgba(255,255,255,.06) inset;
+      transition:transform .16s var(--e), box-shadow .26s var(--e), filter .2s var(--e);
+      will-change:transform, box-shadow, filter;
+      position:relative; overflow:hidden;
+    }
+    .btn::before{ /* silky sheen sweep */
+      content:""; position:absolute; inset:0; translate:-120% 0;
+      background:linear-gradient(100deg, transparent 40%, rgba(255,255,255,.22) 50%, transparent 60%);
+    }
+    @media (prefers-reduced-motion:no-preference){
+      .btn:hover{ transform:translateY(-1px); filter:brightness(1.02); box-shadow:0 18px 52px rgba(185,31,53,.45), 0 2px 0 rgba(255,255,255,.08) inset; }
+      .btn:hover::before{ animation:sheen .85s var(--e); }
+      @keyframes sheen{ to{ translate:120% 0; } }
+    }
+    .btn:active{ transform:translateY(0) scale(.995) }
+    .btn[disabled]{ opacity:.6; cursor:not-allowed; filter:saturate(.85); }
+
+    .muted-link{ display:block; text-align:center; margin-top:.6rem; color:var(--dim); text-decoration:none; font-size:.92rem; }
+    .muted-link:hover{ color:var(--ink) }
+
+    .hr{ height:1px; margin:.55rem 0 .35rem; background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent); }
+    .fine{ margin-top:.65rem; font-size:.8rem; color:#9aa; text-align:center; }
+
+    /* Focus vis */
+    :focus-visible{ outline:2px solid rgba(255,215,0,.55); outline-offset:2px; border-radius:10px; }
+
+    /* Progressive enhancement: style invalid quickly (no JS) */
+    @supports(selector(:has(*))){
+      .pw:has(input:invalid) .meter{ border-color:rgba(255,86,112,.35); }
+      form:has(#confirmPassword:invalid) #confirmPassword{ border-color:rgba(255,86,112,.55); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top-right login (also duplicated below form) -->
+  <div class="topbar"><a href="/login" aria-label="Already a member? Log in">Already a member? Log in</a></div>
+
+  <main class="wrap" aria-label="Signup split layout">
+    <!-- LEFT: Value prop & features -->
+    <aside class="left" aria-label="Highlights">
+      <div class="brand" aria-label="Brand">
+        <div class="brand__mark" aria-hidden="true">
+          <!-- Inline SVG = no fetch -->
+          <svg width="22" height="22" viewBox="0 0 24 24" role="img" aria-label="Vault" fill="none">
+            <defs>
+              <linearGradient id="gld" x1="0" y1="0" x2="24" y2="24">
+                <stop stop-color="#FFD700"/><stop offset="1" stop-color="#b88a00"/>
+              </linearGradient>
+            </defs>
+            <rect x="3" y="4" width="18" height="16" rx="3" stroke="url(#gld)" stroke-width="1.6"/>
+            <circle cx="12" cy="12" r="3" stroke="url(#gld)" stroke-width="1.6"/>
+            <line x1="12" y1="9" x2="12" y2="7" stroke="url(#gld)" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand__name">The Treasuretto Vault</div>
+      </div>
+
+      <h1 class="h1">Unlock Elite Reseller Tools</h1>
+      <p class="sub">Premium, members-only platform to scale your vintage reselling with AI tools, proven playbooks, and weekly trends — crafted for speed and conversions.</p>
+      <div class="offer" aria-label="Intro offer">Free 2-day trial • $25/mo after</div>
+
+      <div class="features" role="list" aria-label="Key features">
+        <article class="card" role="listitem">
+          <div class="dot" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24"><path d="M4 12l4 4 12-12" fill="none" stroke="#FFD700" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>AI Listing & Pricing Tools</h3>
+          <p>Titles, descriptions, and price bands that convert — in seconds.</p>
+        </article>
+        <article class="card" role="listitem">
+          <div class="dot" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24"><path d="M4 12l4 4 12-12" fill="none" stroke="#FFD700" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Shipping Cheat Sheet</h3>
+          <p>Carrier comparisons and packaging SOPs to slash costs.</p>
+        </article>
+        <article class="card" role="listitem">
+          <div class="dot" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24"><path d="M4 12l4 4 12-12" fill="none" stroke="#FFD700" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Fake Check Reference Center</h3>
+          <p>Authenticate vintage pieces with brand tells and tag libraries.</p>
+        </article>
+        <article class="card" role="listitem">
+          <div class="dot" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24"><path d="M4 12l4 4 12-12" fill="none" stroke="#FFD700" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Weekly Trends & Drops</h3>
+          <p>See what’s moving across Depop, eBay, Grailed, Poshmark, and more.</p>
+        </article>
+      </div>
+
+      <div class="rating" aria-label="Member rating">
+        <div class="stars" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.61L12 2.5l2.81 6.13L22 9.24l-5.46 4.76 1.64 7.03z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.61L12 2.5l2.81 6.13L22 9.24l-5.46 4.76 1.64 7.03z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.61L12 2.5l2.81 6.13L22 9.24l-5.46 4.76 1.64 7.03z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.61L12 2.5l2.81 6.13L22 9.24l-5.46 4.76 1.64 7.03z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 17.3l-6.18 3.73 1.64-7.03L2 9.24l7.19-.61L12 2.5l2.81 6.13L22 9.24l-5.46 4.76 1.64 7.03z"/></svg>
+        </div>
+        <span>4.9/5 from 1,200+ active sellers</span>
+      </div>
+    </aside>
+
+    <!-- RIGHT: Signup form -->
+    <section class="formWrap" aria-label="Signup">
+      <div class="form" role="region" aria-labelledby="signup-title">
+        <h2 id="signup-title" class="h2">Create your Vault account</h2>
+        <p class="lead">Start your free 2-day trial. Then $25/month after. Cancel anytime.</p>
+        <div class="hr" aria-hidden="true"></div>
+
+        <form id="signupForm" novalidate>
+          <div class="row row--2">
+            <div>
+              <label for="fullName">Full name</label>
+              <input class="input" id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Jane Doe" required minlength="2" />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="you@domain.com" required />
+            </div>
+          </div>
+
+          <div class="row row--2">
+            <div class="pw">
+              <label for="password">Password</label>
+              <input class="input" id="password" name="password" type="password" autocomplete="new-password" placeholder="Create a strong password" required minlength="8" />
+              <button class="toggle" type="button" aria-label="Show password" data-target="password">👁</button>
+              <div class="meter" aria-hidden="true"><div class="meter__bar" id="pwBar"></div></div>
+              <div class="meter__label" id="pwLabel" aria-live="polite">Strength: —</div>
+            </div>
+            <div class="pw">
+              <label for="confirmPassword">Confirm password</label>
+              <input class="input" id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter your password" required minlength="8" />
+              <button class="toggle" type="button" aria-label="Show password" data-target="confirmPassword">👁</button>
+            </div>
+          </div>
+
+          <div>
+            <label for="market">Primary marketplace</label>
+            <select id="market" name="market" class="input" required>
+              <option value="" disabled selected>Select one</option>
+              <option>Depop</option><option>eBay</option><option>Poshmark</option><option>Grailed</option>
+              <option>Etsy</option><option>Mercari</option><option>Shopify</option><option>Other</option>
+            </select>
+          </div>
+
+          <div class="terms">
+            <input id="agree" name="agree" type="checkbox" required />
+            <label for="agree">I agree to the <a href="/terms" target="_blank" rel="noopener">Terms</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</label>
+          </div>
+
+          <button id="submitBtn" class="btn" type="submit" disabled>
+            <span id="btnIcon" aria-hidden="true">🔒</span>
+            <span>Continue to Secure Checkout</span>
+          </button>
+
+          <a class="muted-link" href="/login">Already a member? Log in</a>
+          <p class="fine">No charge until after your 2-day trial. Cancel anytime.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Supabase client (public keys only) -->
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+    // ⬇️ REPLACE with your real values
+    const SUPABASE_URL = 'https://crlhfdjjopikjzpddish.supabase.co'
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNybGhmZGpqb3Bpa2p6cGRkaXNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4NjA3NzgsImV4cCI6MjA3MDQzNjc3OH0.9kYUw7DV5ocA3D1Ss9OJhng1TnZYiLwC3Qw4Pc590UE'
+
+    // Make it available to the script below
+    window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  </script>
+
+  <script>
+    // ===================================================================
+    // Featherweight JS (performance-first)
+    // - Password show/hide toggles
+    // - Strength meter (fast heuristic)
+    // - Realtime validity gate for CTA
+    // - Supabase auth + Lemon Squeezy checkout integration
+    // ===================================================================
+    const $ = (q, ctx=document) => ctx.querySelector(q);
+    const $$ = (q, ctx=document) => Array.from(ctx.querySelectorAll(q));
+
+    const form = $('#signupForm');
+    const submitBtn = $('#submitBtn');
+    const pw = $('#password');
+    const pw2 = $('#confirmPassword');
+    const pwBar = $('#pwBar');
+    const pwLabel = $('#pwLabel');
+    const requiredInputs = $$('input[required], select[required]', form);
+
+    // Show/Hide toggles
+    $$('.toggle').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const el = document.getElementById(btn.dataset.target);
+        const isText = el.type === 'text';
+        el.type = isText ? 'password' : 'text';
+        btn.setAttribute('aria-label', isText ? 'Show password' : 'Hide password');
+      }, {passive:true});
+    });
+
+    // Strength estimator: length + variety - common patterns
+    function scorePassword(s){
+      if(!s) return 0;
+      let n = 0;
+      const L = s.length;
+      const lower=/[a-z]/.test(s), upper=/[A-Z]/.test(s), digit=/\d/.test(s), sym=/[^A-Za-z0-9]/.test(s);
+      n += Math.min(6, Math.floor(L/2));                  // length weight up to 6
+      [lower,upper,digit,sym].forEach(v => n += v ? 2 : 0); // character classes
+      if(/(.)\1{2,}/.test(s)) n -= 2;                     // repeats
+      if(/password|1234|qwer|letmein|treasure|vault/i.test(s)) n -= 3; // common
+      return Math.max(0, Math.min(12, n));
+    }
+    function renderStrength(){
+      const sc = scorePassword(pw.value);
+      pwBar.style.width = (sc/12)*100 + '%';
+      let label = 'Weak';
+      if(sc >= 4 && sc < 8) label = 'Fair';
+      if(sc >= 8 && sc < 11) label = 'Strong';
+      if(sc >= 11) label = 'Very strong';
+      if(!pw.value){ pwBar.style.width='0%'; label='—'; }
+      pwLabel.textContent = 'Strength: ' + label;
+      pwBar.style.filter = sc >= 8 ? 'saturate(1.3)' : 'saturate(1.0)';
+    }
+
+    function validateMatch(){
+      if(pw2.value && pw.value !== pw2.value){
+        pw2.setCustomValidity("Passwords don’t match.");
+      } else {
+        pw2.setCustomValidity("");
+      }
+    }
+
+    function gateSubmit(){
+      const ok = requiredInputs.every(el=>{
+        if(el.type === 'checkbox') return el.checked;
+        if(el.id === 'confirmPassword') return el.value.length >= 8 && el.value === pw.value;
+        return el.value?.trim() && el.checkValidity();
+      });
+      submitBtn.disabled = !ok;
+    }
+
+    form.addEventListener('input', (e)=>{
+      if(e.target === pw || e.target === pw2){ validateMatch(); renderStrength(); }
+      gateSubmit();
+    }, {passive:true});
+    form.addEventListener('change', gateSubmit, {passive:true});
+
+    // Initial
+    renderStrength(); gateSubmit();
+
+    // Submit — Supabase + (conditional) Lemon Squeezy
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if(!form.checkValidity()){ form.reportValidity(); return; }
+
+      const old = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span aria-hidden="true">⏳</span><span>Creating your account…</span>';
+
+      const payload = {
+        fullName: $('#fullName').value.trim(),
+        email: $('#email').value.trim(),
+        password: pw.value,
+        market: $('#market').value
+      };
+
+      try{
+        // 1) Supabase sign up (sends confirmation if enabled)
+        const { data, error } = await window.supabase.auth.signUp({
+          email: payload.email,
+          password: payload.password,
+          options: {
+            data: { full_name: payload.fullName, market: payload.market },
+            emailRedirectTo: location.origin + '/welcome' // whitelist in Supabase
+          }
+        });
+        if (error) throw error;
+
+        const userId = data.user?.id;
+
+        // Optional: optimistic profile stub (server route uses service key; RLS-safe)
+        if (userId) {
+          await fetch('/api/upsert-profile', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ id: userId, full_name: payload.fullName, market: payload.market })
+          }).catch(()=>{});
+        }
+
+        // 2) If confirmation is ON → no session yet. Show “check email” and stop here.
+        if (!data.session) {
+          submitBtn.innerHTML = '<span aria-hidden="true">📩</span><span>Check your email to confirm</span>';
+          submitBtn.disabled = true;
+          form.outerHTML = `
+            <div class="form">
+              <h2 class="h2">Check your email</h2>
+              <p class="lead">We sent a confirmation link to <b>${payload.email}</b>. After confirming, we’ll take you to secure checkout.</p>
+              <div class="hr" aria-hidden="true"></div>
+              <a class="muted-link" href="/login">Already confirmed? Log in</a>
+            </div>
+          `;
+          return;
+        }
+
+        // 3) If confirmation is OFF → create checkout now
+        const res = await fetch('/api/create-checkout', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            email: payload.email,
+            name: payload.fullName,
+            supabase_user_id: userId
+          })
+        });
+        const { url } = await res.json();
+        if (!url) throw new Error('No checkout URL from server');
+        window.location.href = url;
+
+      }catch(err){
+        console.error(err);
+        alert(err?.message || "We couldn’t create your account. Please try again, or contact support.");
+        submitBtn.innerHTML = old;
+        submitBtn.disabled = false;
+      }
+    });
+
+    // Small perf win: give the main CTA focus once fonts are ready
+    if('fonts' in document){
+      document.fonts.ready.then(()=>{ const b = document.getElementById('submitBtn'); if(b && b.disabled === false) b.blur(); });
+    }
+  </script>
+</body>
+</html>

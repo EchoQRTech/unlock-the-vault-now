@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ==========================================================
+       The Treasuretto Vault — Welcome / Post-Confirm Redirect
+       ========================================================== -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <title>Welcome to The Treasuretto Vault</title>
+
+  <!-- === CONFIG (update these!) === -->
+  <meta name="supabase-url" content="https://crlhfdjjopikjzpddish.supabase.co">
+  <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNybGhmZGpqb3Bpa2p6cGRkaXNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4NjA3NzgsImV4cCI6MjA3MDQzNjc3OH0.9kYUw7DV5ocA3D1Ss9OJhng1TnZYiLwC3Qw4Pc590UE">
+
+  <!-- Fonts (optional) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0a0a0f; --bg-2:#0e0e14; --text:#e9e7e1; --muted:#b9b6ad;
+      --gold:#FFD700; --gold-deep:#b88a00; --gold-soft:#ffe8a3;
+      --velvet:#7b0e1b; --velvet-dark:#4e0a12;
+      --ok:#38d99e; --warn:#ffb020; --err:#e25555;
+      --radius-xl: 22px;
+      --shadow-soft: 0 10px 30px rgba(0,0,0,.35);
+      --shadow-gold: 0 0 32px rgba(255,215,0,.15);
+      --shadow-velvet: 0 8px 28px rgba(123,14,27,.35);
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      background: radial-gradient(1200px 900px at 50% -10%, #121218 0%, var(--bg) 55%, #000 100%);
+      color: var(--text);
+      font-family: Inter, system-ui, sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container {
+      min-height: 100%;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      align-items: center;
+      justify-items: center;
+      padding: 18px;
+    }
+    .card {
+      width: 100%;
+      max-width: 720px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)) padding-box,
+                  linear-gradient(140deg, rgba(255,215,0,.35), rgba(255,255,255,0) 30%, rgba(123,14,27,.35)) border-box;
+      border: 1px solid transparent;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft), var(--shadow-gold);
+      padding: clamp(18px, 4vw, 38px);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::after{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(350px 120px at 80% -10%, rgba(255,215,0,.10), transparent 70%),
+                  radial-gradient(220px 90px at 10% 105%, rgba(123,14,27,.18), transparent 70%);
+      z-index:-1;
+      filter: blur(12px);
+    }
+    .brand { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+    .vault-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: radial-gradient(10px 10px at 11px 11px, rgba(255,215,0,.8), transparent 60%),
+                  conic-gradient(from 30deg, rgba(255,215,0,.35), rgba(255,215,0,0) 40%, rgba(255,215,0,.25));
+      border:1px solid rgba(255,215,0,.4);
+      box-shadow: inset 0 0 18px rgba(255,215,0,.35);
+      position: relative;
+    }
+    .vault-icon::after{
+      content:""; position:absolute; inset:8px; border-radius:50%;
+      border:2px solid rgba(255,215,0,.5);
+    }
+    .brand-name { font-weight:600; font-size:14.5px; color:var(--gold-soft) }
+    .headline {
+      font-family: Cinzel, serif;
+      font-weight: 800;
+      font-size: clamp(32px, 6vw, 56px);
+      margin: 6px 0 10px;
+      background: linear-gradient(92deg, var(--gold) 0%, #fff7c9 40%, var(--gold) 80%);
+      -webkit-background-clip: text; color: transparent;
+      animation: goldShine 3.6s ease-in-out infinite;
+      text-align:center;
+    }
+    @keyframes goldShine{ 50% { filter: drop-shadow(0 0 16px rgba(255,215,0,.32)); } }
+    .sub { text-align:center; color: var(--muted); font-size: clamp(14px, 2.4vw, 17px); margin-bottom: 22px; }
+    .progress-wrap {
+      background: linear-gradient(180deg, #0c0c12, #0a0a0f);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .progress-label { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); }
+    .progress {
+      width: 100%; height: 10px; background: #0a0a0f;
+      border-radius: 999px; border: 1px solid rgba(255,215,0,.22);
+      overflow: hidden; position: relative;
+    }
+    .bar {
+      width: 0%; height: 100%;
+      background: linear-gradient(90deg, rgba(255,215,0,.15), rgba(255,215,0,.45), rgba(255,215,0,.15));
+      transition: width .35s ease;
+    }
+    footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <div class="brand">
+        <div class="vault-icon"></div>
+        <div class="brand-name">The Treasuretto Vault</div>
+      </div>
+      <h1 class="headline">Welcome to The Vault</h1>
+      <p class="sub">Finalizing your secure membership…</p>
+
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="progress-step">Initializing…</span>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress"><div class="bar" id="progress-bar"></div></div>
+      </div>
+
+      <div id="error" style="display:none; color:red; margin-top:10px;"></div>
+    </section>
+
+    <footer>Need help? <a href="/support">Contact Support</a></footer>
+  </main>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+    const meta = (n) => document.querySelector(`meta[name="${n}"]`)?.content || "";
+    const SUPABASE_URL = meta('supabase-url');
+    const SUPABASE_ANON_KEY = meta('supabase-anon-key');
+    const bar = document.querySelector('#progress-bar');
+    const stepEl = document.querySelector('#progress-step');
+    const pctEl = document.querySelector('#progress-percent');
+    const errBox = document.querySelector('#error');
+
+    function setProgress(p, label) {
+      bar.style.width = p + '%'; pctEl.textContent = p + '%';
+      if (label) stepEl.textContent = label;
+    }
+    function showError(msg){ errBox.textContent = msg; errBox.style.display = 'block'; }
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: true, detectSessionInUrl: false }
+    });
+
+    function parseParams() {
+      const raw = (location.hash?.slice(1) || '') + '&' + (location.search?.slice(1) || '');
+      const params = new URLSearchParams(raw);
+      return { access_token: params.get('access_token'), refresh_token: params.get('refresh_token') };
+    }
+    function stripTokens() {
+      const url = new URL(window.location.href);
+      url.hash = ''; ['access_token','refresh_token','type'].forEach(k => url.searchParams.delete(k));
+      history.replaceState({}, '', url);
+    }
+    async function postJSON(url, body) {
+      const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+      if(!r.ok) throw new Error(await r.text());
+      return r.json();
+    }
+
+    async function run() {
+      try {
+        setProgress(10,'Validating session…');
+        const { access_token, refresh_token } = parseParams();
+        if (access_token && refresh_token) {
+          await supabase.auth.setSession({ access_token, refresh_token });
+          stripTokens();
+        }
+        setProgress(30,'Fetching user…');
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (error || !user) throw new Error('No valid session.');
+
+        setProgress(50,'Saving profile…');
+        await postJSON('/api/upsert-profile', { id: user.id, email: user.email });
+
+        setProgress(80,'Creating checkout…');
+        let checkout;
+        try {
+          checkout = await postJSON('/api/create-checkout', { email: user.email, supabase_user_id: user.id });
+        } catch(e) {
+          // fallback Lemon Squeezy URL for testing
+          checkout = { url: 'https://treasurettovaultt.lemonsqueezy.com/buy/5c045cdc-5948-4e7f-b706-612093e33d30' };
+        }
+
+        if (!checkout?.url) throw new Error('Checkout URL missing.');
+        setProgress(100,'Redirecting…');
+        setTimeout(()=>window.location.href = checkout.url,500);
+
+      } catch(err) { showError(err.message); }
+    }
+    run();
+  </script>
+</body>
+</html>
